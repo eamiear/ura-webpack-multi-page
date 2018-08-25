@@ -122,9 +122,9 @@ exports.createHtmlEntries = (chunks = []) => {
   const dir = resolve('src/pages')
   const entryFiles = glob.sync(dir + '/*.html')
   let pluginSet = []
+  const jsEntries = this.createJsEntries()
 
   entryFiles.forEach(filePath => {
-    const jsEntries = this.createJsEntries()
     const filename = filePath.substring(filePath.lastIndexOf('\/') + 1, filePath.lastIndexOf('.'))
     let htmlWebpackConfig = {
       // template: 'html!' + filePath,

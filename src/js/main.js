@@ -95,6 +95,7 @@ var setting = {
 };
 var ztree;
 
+import '@/styles/main.scss'
 var vm = new Vue({
     el: '#rrapp',
     data: {

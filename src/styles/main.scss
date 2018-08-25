@@ -1,0 +1,11 @@
+.main-container {
+  width: 80%;
+  border: 1px solid #ccc;
+  margin: 20px auto;
+
+  & .header{
+    text-align: left;
+    padding: 10px;
+    color: red;
+  }
+}
