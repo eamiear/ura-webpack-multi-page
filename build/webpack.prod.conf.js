@@ -16,8 +16,6 @@ const env = process.env.NODE_ENV === 'testing'
   : require('../config/prod.env')
 
 
-const htmls = utils.createHtmlEntries(['vendor', 'manifest', 'app'])
-console.log('===================== \n\t', htmls)
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({
