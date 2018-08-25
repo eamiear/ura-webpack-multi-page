@@ -129,7 +129,8 @@ exports.createHtmlEntries = (chunks = []) => {
     let htmlWebpackConfig = {
       // template: 'html!' + filePath,
       template: filePath,
-      filename: filename + '.html'
+      filename: filename + '.html',
+      compress: true
     }
 
     if (filename in jsEntries) {
