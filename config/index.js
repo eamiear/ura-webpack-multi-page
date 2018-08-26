@@ -40,7 +40,13 @@ module.exports = {
     // https://vue-loader.vuejs.org/en/options.html#cachebusting
     cacheBusting: true,
 
-    cssSourceMap: true
+    cssSourceMap: true,
+
+    browserSync: {
+      host: 'localhost',
+      port: 3000,
+      proxy: ''
+    }
   },
 
   build: {
