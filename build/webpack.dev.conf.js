@@ -9,11 +9,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
+const BrowserSyncPlugin = require('browser-sync-webpack-plugin')
 
 const HOST = process.env.HOST
 const PORT = process.env.PORT && Number(process.env.PORT)
 
-// baseWebpackConfig.entry['hot-middleware'] = 'webpack-hot-middleware/client?reload=true'
 const devWebpackConfig = merge(baseWebpackConfig, {
   module: {
     rules: utils.styleLoaders({ sourceMap: config.dev.cssSourceMap, usePostCSS: true })
@@ -30,8 +30,10 @@ const devWebpackConfig = merge(baseWebpackConfig, {
       ],
     },
     hot: true,
-    contentBase: false, // since we use CopyWebpackPlugin.
-    compress: true,
+    // contentBase: false, // since we use CopyWebpackPlugin.
+    contentBase: config.build.assetsRoot, // since we use CopyWebpackPlugin.
+    // watchContentBase: true,
+    // compress: true,
     host: HOST || config.dev.host,
     port: PORT || config.dev.port,
     open: config.dev.autoOpenBrowser,
@@ -52,6 +54,22 @@ const devWebpackConfig = merge(baseWebpackConfig, {
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NamedModulesPlugin(), // HMR shows correct file names in console on update.
     new webpack.NoEmitOnErrorsPlugin(),
+    new BrowserSyncPlugin({
+      host: 'localhost',
+      port: 3000,
+      proxy: `${config.dev.host}:${config.dev.port}`,
+      files: [
+        {
+          match: ['**/*.html'],
+          fn: function(event, file) {
+            if (event === 'change') {
+              const bs = require('browser-sync').get('bs-webpack-plugin')
+              bs.reload()
+            }
+          }
+        }
+      ]
+    }, { reload: false }),
     // https://github.com/ampedandwired/html-webpack-plugin
     // new HtmlWebpackPlugin({
     //   filename: 'index.html',
